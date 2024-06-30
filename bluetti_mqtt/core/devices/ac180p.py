@@ -62,7 +62,22 @@ class AC180P(BluettiDevice):
     @property
     def polling_commands(self) -> List[ReadHoldingRegisters]:
         return [
-            ReadHoldingRegisters(100, 62),
+            #ReadHoldingRegisters(0,21),
+            ReadHoldingRegisters(100, 67),
+            #ReadHoldingRegisters(700, 6),
+            #ReadHoldingRegisters(720, 49),
+            ReadHoldingRegisters(1100, 51),
+            #ReadHoldingRegisters(1200, 90),
+            ReadHoldingRegisters(1300, 31),
+            #ReadHoldingRegisters(1400, 48),
+            #ReadHoldingRegisters(1500, 30),
+            ReadHoldingRegisters(2000, 67),
+            ReadHoldingRegisters(2200, 29),
+            #ReadHoldingRegisters(3000, 27),
+            ReadHoldingRegisters(6000, 31),
+            #ReadHoldingRegisters(6100, 100),
+            #ReadHoldingRegisters(6300, 52),
+            #ReadHoldingRegisters(7000, 5)
         ]
 
     @property
@@ -70,8 +85,8 @@ class AC180P(BluettiDevice):
         return [
             ReadHoldingRegisters(0,21),
             ReadHoldingRegisters(100, 67),
-            ReadHoldingRegisters(700,6),
-            ReadHoldingRegisters(720,49),
+            ReadHoldingRegisters(700, 6),
+            ReadHoldingRegisters(720, 49),
             ReadHoldingRegisters(1100, 51),
             ReadHoldingRegisters(1200, 90),
             ReadHoldingRegisters(1300, 31),
@@ -83,5 +98,5 @@ class AC180P(BluettiDevice):
             ReadHoldingRegisters(6000, 31),
             ReadHoldingRegisters(6100, 100),
             ReadHoldingRegisters(6300, 52),
-            ReadHoldingRegisters(7000,5)
+            ReadHoldingRegisters(7000, 5)
         ]
