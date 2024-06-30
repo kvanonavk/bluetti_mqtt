@@ -28,7 +28,7 @@ Installation
 
 .. code-block:: bash
 
-    $ pip install git+https://github.com/ftrueck/bluetti_mqtt
+    $ pip install git+https://github.com/kvanonavk/bluetti_mqtt
 
 Usage
 -----
