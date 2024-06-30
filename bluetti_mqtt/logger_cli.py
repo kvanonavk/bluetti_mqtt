@@ -86,6 +86,8 @@ async def log(address: str, path: str):
 
                 for command in device.pack_logging_commands:
                     await log_command(client, device, command, log_file)
+            
+            await asyncio.sleep(10)
 
 
 def main():

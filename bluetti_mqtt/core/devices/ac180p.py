@@ -20,7 +20,7 @@ class AC180P(BluettiDevice):
         self.struct.add_uint_field('total_battery_percent', 102)
 
         #Power IO
-        self.struct.add_uint_field('output_mode',123) #32 when both loads off, 40 when AC is on, 48 when DC is on, 56 when both on 
+        self.struct.add_uint_field('output_mode',123) #32 when both loads off, 40 when AC is on, 48 when DC is on, 56 when both on, 74 when UPS (AC + GRID) 
         self.struct.add_uint_field('dc_output_power', 140)
         self.struct.add_uint_field('ac_output_power', 142)
         self.struct.add_uint_field('dc_input_power', 144)
