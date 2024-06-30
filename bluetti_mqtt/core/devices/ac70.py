@@ -6,7 +6,6 @@ from .struct import DeviceStruct
 
 
 @unique
-
 class ChargingMode(Enum):
     STANDARD = 0
     SILENT = 1

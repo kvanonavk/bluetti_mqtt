@@ -1,7 +1,14 @@
+from enum import Enum, unique
 from typing import List
 from ..commands import ReadHoldingRegisters
 from .bluetti_device import BluettiDevice
 from .struct import DeviceStruct
+
+@unique
+class ChargingMode(Enum):
+    STANDARD = 0
+    SILENT = 1
+    TURBO = 2
 
 class AC180P(BluettiDevice):
     def __init__(self, address: str, sn: str):
@@ -14,27 +21,41 @@ class AC180P(BluettiDevice):
         self.struct.add_sn_field('serial_number', 1107)
 
         #Battery Data
-        self.struct.add_swap_string_field('battery_type', 6101, 6)
-        self.struct.add_sn_field('battery_serial_number', 6107)
-        self.struct.add_version_field('bcu_version', 6175)
+        #self.struct.add_swap_string_field('battery_type', 6101, 6)
+        #self.struct.add_sn_field('battery_serial_number', 6107)
+        #self.struct.add_version_field('bcu_version', 6175)
         self.struct.add_uint_field('total_battery_percent', 102)
 
-        #Power IO
-        self.struct.add_uint_field('output_mode',123) #32 when both loads off, 40 when AC is on, 48 when DC is on, 56 when both on, 74 when UPS (AC + GRID) 
+        # Power IO
+        #self.struct.add_uint_field('output_mode',123) #32 when both loads off, 40 when AC is on, 48 when DC is on, 56 when both on, 74 when UPS (AC + GRID) 
         self.struct.add_uint_field('dc_output_power', 140)
         self.struct.add_uint_field('ac_output_power', 142)
         self.struct.add_uint_field('dc_input_power', 144)
-        self.struct.add_uint_field('ac_input_power', 146) #this is a guess because I didn't have a PV module handy to test
+        self.struct.add_uint_field('ac_input_power', 146)
+
+        # Input Details (1100 - 1300)
+        self.struct.add_decimal_field('ac_input_voltage', 1314, 1)
+
+        # Controls (2000)
+        self.struct.add_bool_field('ac_output_on', 2011)
+        self.struct.add_bool_field('dc_output_on', 2012)
+        self.struct.add_enum_field('charging_mode', 2020, ChargingMode)
+        self.struct.add_bool_field('power_lifting_on', 2021)
+
+        # Controls (2200)
+        self.struct.add_bool_field('grid_enhancement_mode_on', 2225)
+
+        self.struct.add_decimal_field('total_battery_voltage', 6003, 2)
 
         #History
-        self.struct.add_decimal_field('power_generation', 154, 1)  # Total power generated since last reset (kwh)
+        # self.struct.add_decimal_field('power_generation', 154, 1)  # Total power generated since last reset (kwh)
         # self.struct.add_decimal_field('power_generation', 1202, 1)  # Total power generated since last reset (kwh)
 
         # this is usefule for investigating the available data
-        registers = {0:21,100:67,700:6,720:49,1100:51,1200:90,1300:31,1400:48,1500:30,2000:67,2200:29,3000:27,6000:31,6100:100,6300:52,7000:5}
-        for k in registers:
-            for v in range(registers[k]):
-                self.struct.add_uint_field('testI' + str(v+k), v+k)
+        #registers = {0:21,100:67,700:6,720:49,1100:51,1200:90,1300:31,1400:48,1500:30,2000:67,2200:29,3000:27,6000:31,6100:100,6300:52,7000:5}
+        #for k in registers:
+            #for v in range(registers[k]):
+                #self.struct.add_uint_field('testI' + str(v+k), v+k)
 
         super().__init__(address, 'AC180P', sn)
 
